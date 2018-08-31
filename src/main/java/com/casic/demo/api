@@ -1,0 +1,32 @@
+package com.casic.demo.api;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.casic.demo.service.student.StudentService;
+
+@Controller
+@RequestMapping("/demo/student/api/")
+public class StudentApi {
+
+	@Resource
+	private StudentService studentService;
+	
+	@RequestMapping(value = "getStudent", method = RequestMethod.GET)
+	@ResponseBody
+	public Object getStudent(HttpServletRequest request){
+		return studentService.getById(Long.parseLong(request.getParameter("studentId")));
+	}
+	
+	@RequestMapping(value = "getStudent2", method = RequestMethod.POST)
+	@ResponseBody
+	public Object getStudent2(HttpServletRequest request){
+		return studentService.getById(Long.parseLong(request.getParameter("studentId")));
+	}
+}

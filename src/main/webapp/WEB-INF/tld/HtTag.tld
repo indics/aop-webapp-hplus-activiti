@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd">
+	<tlib-version>1.0</tlib-version>
+	<short-name>f</short-name>     
+	<uri>http://www.jee-soft.cn/functions</uri>   
+	<function>
+		<description>获取当前子系统ID</description>  
+		<name>getCurrentSystemId</name>  
+		<function-class>com.cosim.platform.service.system.SubSystemUtil</function-class>   
+		<function-signature>java.lang.Long getCurrentSystemId()</function-signature>
+		<example>${f:getCurrentSystemId()}</example>          
+	</function>
+	<function>
+		<description>获取当前企业ID</description>  
+		<name>getCurrentTenantId</name>  
+		<function-class>com.cosim.core.util.ContextUtil</function-class>   
+		<function-signature>java.lang.Long getCurrentTenantId()</function-signature>
+		<example>${f:getCurrentTenantId()}</example>          
+	</function>
+	<function> 
+		<description>租户标签</description>  
+		<name>getCurrentOrgInfoFromSession</name>  
+		<function-class>com.cosim.core.util.ContextUtil</function-class>   
+		<function-signature>SysOrgInfo getCurrentOrgInfoFromSession()</function-signature>
+		<example>${f:getCurrentOrgInfoFromSession()}</example>          
+	</function>
+	<function> 
+		<description>获取当前用户</description>  
+		<name>getCurrentUser</name>  
+		<function-class>com.cosim.core.util.ContextUtil</function-class>   
+		<function-signature>ISysUser getCurrentUser()</function-signature>
+		<example>${f:getCurrentUser()}</example>          
+	</function>
+	<function>
+		<description>时间转化</description>  
+		<name>formatTime</name>  
+		<function-class>com.cosim.core.util.TimeUtil</function-class>   
+		<function-signature>java.lang.String formatTime(long)</function-signature>
+		<example>${f:formatTime(date)}</example>          
+	</function>
+	<function>
+		<description>日期转化</description>  
+		<name>formatDate</name>  
+		<function-class>com.cosim.core.util.TimeUtil</function-class>   
+		<function-signature>java.lang.String formatDate(long)</function-signature>
+		<example>${f:formatDate(date)}</example>          
+	</function>
+	<function>
+		<description>取得当前时间</description>  
+		<name>currentTime</name>  
+		<function-class>com.cosim.core.util.TimeUtil</function-class>   
+		<function-signature>java.lang.String getCurrentTime()</function-signature>
+		<example>${f:currentTime()}</example>          
+	</function>
+	
+	<function>
+		<description>取得当前日期</description>  
+		<name>currentDate</name>  
+		<function-class>com.cosim.core.util.TimeUtil</function-class>   
+		<function-signature>java.lang.String getCurrentDate()</function-signature>
+		<example>${f:currentDate()}</example>          
+	</function>
+	
+	<function>
+		<description>根据日期取得短日期格式的显示</description>  
+		<name>shortDate</name>  
+		<function-class>com.cosim.core.util.TimeUtil</function-class>   
+		<function-signature>java.lang.String getDateString(java.util.Date)</function-signature>
+		<example>${f:shortDate(date)}</example>          
+	</function>
+	
+	<function>
+		<description>根据日期取得长日期格式的显示</description>  
+		<name>longDate</name>  
+		<function-class>com.cosim.core.util.TimeUtil</function-class>   
+		<function-signature>java.lang.String getDateTimeString(java.util.Date)</function-signature>
+		<example>${f:longDate(date)}</example>          
+	</function>
+	
+	<function>
+		<description>根据路径返回多少个空格</description>  
+		<name>returnSpace</name>  
+		<function-class>com.cosim.core.util.StringUtil</function-class>   
+		<function-signature>java.lang.String returnSpace(java.lang.String)</function-signature>
+		<example>${f:returnSpace(string)}</example>          
+	</function>
+	
+	<function>
+		<description>根据毫秒数取得时间段</description>  
+		<name>getTime</name>  
+		<function-class>com.cosim.core.util.TimeUtil</function-class>   
+		<function-signature>java.lang.String getTime(java.lang.Long)</function-signature>
+		<example>${f:getTime(long)}</example>          
+	</function>
+
+	
+	<!--链接标签-->
+	<tag>
+		<name>a</name>
+		<description>链接标签</description>  
+		<tag-class>com.cosim.core.web.tag.AnchorTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>alias</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>css</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>href</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>target</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>action</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<!--样式标签-->
+	<tag>
+		<name>link</name>
+		<description>样式标签</description>  
+		<tag-class>com.cosim.core.web.tag.StyleTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>href</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>userName</name>
+		<description>获取用户名</description>  
+		<tag-class>com.cosim.platform.tag.UserNameTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>userId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>menu</name>
+		<description>下拉菜单</description>  
+		<tag-class>com.cosim.core.web.tag.MenuTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<!--js验证标签-->
+	<!--tag>
+		<name>validjs</name>
+		<description>JS验证标签</description>  
+		<tag-class>com.cosim.core.web.tag.ValidJsTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>formName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag-->
+	<!-- 页面选项卡 -->
+	<tag>
+		<name>tab</name> 
+		<tag-class>com.cosim.core.web.tag.TabTag</tag-class>
+		<attribute>
+			<name>curTab</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>tabName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<!-- 流程标签 -->
+	<tag>
+		<name>flowVar</name>
+		<tag-class>com.cosim.platform.tag.FlowVarsTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>defId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>controlName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>change</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<!-- 区域权限标签-->
+	<tag>
+		<name>block</name>
+		<tag-class>com.cosim.core.web.tag.BlockTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>alias</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+		
+</taglib>

@@ -1,0 +1,100 @@
+/*
+    @Use:Initialization stylesheet
+    @Auth:Sinrry
+    @Version:v1.0
+*/
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+th,
+td,
+p,
+blockquote,
+pre,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+hr {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font: 12px/1.5 Arial, Helvetica, SimSun, san-serif;
+	color: #333;
+}
+select,
+input,
+button {
+	vertical-align: middle;
+	font-size: 100%;
+}
+ul,
+ol {
+	list-style: none;
+}
+fieldset,
+img {
+	border: 0;
+}
+em {
+	font-style: normal;
+}
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix {
+	display: inline-block;
+}
+* html .clearfix {
+	height: 1%;
+}
+.clearfix {
+	display: block;
+}
+.clear {
+	clear: both;
+	height: 0;
+	font: 0/0 Arial;
+	visibility: hidden;
+}
+.l {
+	float: left;
+}
+.r {
+	float: right;
+}
+a {
+	text-decoration: none;
+}
+a:hover {
+	color: #ff8c00;
+	text-decoration: none;
+}
+a{outline:none;blr:expression(this.onFocus=this.blur());}
+body {
+	background: #fff;
+	font-family: "Microsoft YaHei";
+}
+img {
+	display: inline-block;
+	vertical-align: top;
+}
+input,textarea{outline: none;}
+

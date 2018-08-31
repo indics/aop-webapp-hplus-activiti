@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.casic.demo.model.course.StudentItem">
+	<resultMap id="StudentItem" type="com.casic.demo.model.course.StudentItem">
+		<id property="itemId" column="item_id" jdbcType="NUMERIC"/>
+		<result property="courseId" column="course_id" jdbcType="NUMERIC"/>
+		<result property="studentId" column="student_id" jdbcType="NUMERIC"/>
+		<result property="remark" column="remark" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<sql id="columns">
+		item_id,course_id,student_id,remark
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(itemId)"> AND item_id  =#{itemId} </if>
+			<if test="@Ognl@isNotEmpty(courseId)"> AND course_id  =#{courseId} </if>
+			<if test="@Ognl@isNotEmpty(studentId)"> AND student_id  =#{studentId} </if>
+			<if test="@Ognl@isNotEmpty(remark)"> AND remark  LIKE #{remark}  </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.casic.demo.model.course.StudentItem">
+		INSERT INTO demo_student_item
+		(item_id,course_id,student_id,remark)
+		VALUES
+		(#{itemId,jdbcType=NUMERIC}, #{courseId,jdbcType=NUMERIC}, #{studentId,jdbcType=NUMERIC}, #{remark,jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM demo_student_item 
+		WHERE
+		item_id=#{itemId}
+	</delete>
+	
+	<update id="update" parameterType="com.casic.demo.model.course.StudentItem">
+		UPDATE demo_student_item SET
+		course_id=#{courseId,jdbcType=NUMERIC},
+		student_id=#{studentId,jdbcType=NUMERIC},
+		remark=#{remark,jdbcType=VARCHAR}
+		WHERE
+		item_id=#{itemId}
+	</update>
+	<delete id="delByMainId">
+	    DELETE FROM demo_student_item
+	    WHERE
+	    student_id=#{studentId}
+	</delete>    
+	
+	<select id="getStudentItemList" resultMap="StudentItem">
+	    SELECT <include refid="columns"/>
+	    FROM demo_student_item 
+	    WHERE student_id=#{studentId}
+	</select>
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="StudentItem">
+		SELECT <include refid="columns"/>
+		FROM demo_student_item
+		WHERE
+		item_id=#{itemId}
+	</select>
+	
+	<select id="getAll" resultMap="StudentItem">
+		SELECT <include refid="columns"/>
+		FROM demo_student_item   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by item_id  desc
+		</if>
+	</select>
+</mapper>

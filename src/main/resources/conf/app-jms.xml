@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+	<!--(嵌入配置)activeMq消息容器	-->
+ <!--    <amq:broker useJmx="false" persistent="false">
+        <amq:persistenceAdapter>
+            <amq:jdbcPersistenceAdapter id="jdbcAdapter" dataSource="#dataSource" createTablesOnStartup="false" useDatabaseLock="false"/>
+        </amq:persistenceAdapter>
+        <amq:transportConnectors>
+			<amq:transportConnector uri="tcp://localhost:41616" />
+		</amq:transportConnectors>
+    </amq:broker> -->
+  
+  	
+    <!-- (嵌入配置)jms连接工厂    -->
+    <amq:connectionFactory id="simpleJmsConnectionFactory" brokerURL="tcp://localhost:51616" />
+     <!-- 独立部署的activeMQ  
+    <amq:connectionFactory id="simpleJmsConnectionFactory" brokerURL="tcp://{ip}:61616?wireFormat.maxInactivityDuration=0" />
+    -->
+     <!--  Message 转换器  -->
+    <bean id="activeMqMessageConverter" class="com.cosim.core.jms.ActiveMqMessageConverter"/>
+    
+    <!--  Spring Jms模板 -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory">
+            <bean class="org.springframework.jms.connection.SingleConnectionFactory">
+                <!-- 采用普通jms连接工厂 -->
+                <property name="targetConnectionFactory" ref="simpleJmsConnectionFactory"/>
+            </bean>
+        </property>
+        <property name="messageConverter" ref="activeMqMessageConverter"/>
+    </bean>
+    
+    <!-- 消息对象队列  -->
+    <amq:queue id="messageQueue" name="messageQueue" physicalName="messageQueue" />
+    <!-- 消息对象队列  -->
+    <amq:topic id="messageTopic" name="messageTopic" physicalName="messageTopic" /> 
+    <!-- 消息生产者   	-->
+    <bean id="messageProducer" class="com.cosim.core.jms.MessageProducer">
+    	<property name="useQueue" value="true"/> 
+    	<property name="useTopic" value="false"/> 
+    </bean>
+  
+    <!-- 
+    	消息消费者 
+    	map配置的是队列中消息处理类。
+    	键：队列中消息类 对应的类 全路径 如： com.cosim.core.model.MailModel
+    	值：消息处理类,需要实现接口类IJmsHandler 。如：com.cosim.platform.service.jms.impl.MailHandler 
+    	用户也可以配置自己的处理方式，配置到这里。
+     -->   
+    
+   <!--  <bean name="messageConsumer" class="com.cosim.core.jms.MessageConsumer">
+		<property name="handlers">
+			<map> -->
+				<!--
+				<entry  key="com.cosim.core.model.MailModel">
+					<bean class="com.cosim.platform.service.jms.impl.MailHandler"></bean>
+				</entry>
+				<entry  key="com.cosim.core.model.SmsMobile">
+					<bean class="com.cosim.platform.service.jms.impl.SmsHandler"></bean>
+				</entry>
+				 -->
+			<!-- 	<entry  key="com.cosim.core.model.SmsMobile">
+					<bean class="com.casic.cloud.pub.jms.CloudSmsHandler"></bean>
+				</entry>
+				<entry  key="com.cosim.core.model.InnerMessage">
+					<bean class="com.cosim.platform.service.jms.impl.InnerHandler"></bean>
+				</entry>
+			</map>
+		</property> 
+    </bean> -->
+   
+   
+    <!--消息监听容器 --> 
+	<!-- <bean id="messageListenerContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="simpleJmsConnectionFactory" />
+		<property name="destination" ref="messageQueue" />
+		<property name="messageListener" ref="messageMsgListener" />
+	</bean> -->
+    
+    <!-- 邮件消息消费监听器  --> 
+	<!-- <bean id="messageMsgListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg>
+			<ref bean="messageConsumer"/>		
+		</constructor-arg>
+		<property name="messageConverter" ref="activeMqMessageConverter" />
+		<property name="defaultListenerMethod" value="sendMessage" />
+	</bean> -->
+
+</beans>	

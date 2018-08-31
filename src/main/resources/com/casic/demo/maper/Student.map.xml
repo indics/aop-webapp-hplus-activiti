@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.casic.demo.model.course.Student">
+	<resultMap id="Student" type="com.casic.demo.model.course.Student">
+		<id property="studentId" column="student_id" jdbcType="NUMERIC"/>
+		<result property="name" column="name" jdbcType="VARCHAR"/>
+		<result property="sex" column="sex" jdbcType="NUMERIC"/>
+		<result property="honor" column="honor" jdbcType="VARCHAR"/>
+		<result property="createTime" column="create_time" jdbcType="DATE"/>
+		<result property="createUser" column="create_user" jdbcType="NUMERIC"/>
+	</resultMap>
+
+	<sql id="columns">
+		student_id,name,sex,honor,create_time,create_user
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(studentId)"> AND student_id  =#{studentId} </if>
+			<if test="@Ognl@isNotEmpty(name)"> AND name  LIKE #{name}  </if>
+			<if test="@Ognl@isNotEmpty(sex)"> AND sex  =#{sex} </if>
+			<if test="@Ognl@isNotEmpty(honor)"> AND honor  LIKE #{honor}  </if>
+			<if test="@Ognl@isNotEmpty(createTime)"> AND create_time  =#{createTime} </if>
+			<if test="@Ognl@isNotEmpty(begincreateTime)"> AND create_time  >=#{begincreateTime,jdbcType=DATE} </if>
+			<if test="@Ognl@isNotEmpty(endcreateTime)"> AND create_time <![CDATA[ <=#{endcreateTime,jdbcType=DATE}]]> </if>
+			<if test="@Ognl@isNotEmpty(createUser)"> AND create_user  =#{createUser} </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.casic.demo.model.course.Student">
+		INSERT INTO demo_student
+		(student_id,name,sex,honor,create_time,create_user)
+		VALUES
+		(#{studentId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=NUMERIC}, #{honor,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, #{createUser,jdbcType=NUMERIC})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM demo_student 
+		WHERE
+		student_id=#{studentId}
+	</delete>
+	
+	<update id="update" parameterType="com.casic.demo.model.course.Student">
+		UPDATE demo_student SET
+		name=#{name,jdbcType=VARCHAR},
+		sex=#{sex,jdbcType=NUMERIC},
+		honor=#{honor,jdbcType=VARCHAR},
+		create_time=#{createTime,jdbcType=DATE},
+		create_user=#{createUser,jdbcType=NUMERIC}
+		WHERE
+		student_id=#{studentId}
+	</update>
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="Student">
+		SELECT <include refid="columns"/>
+		FROM demo_student
+		WHERE
+		student_id=#{studentId}
+	</select>
+	
+	<select id="getAll" resultMap="Student">
+		SELECT <include refid="columns"/>
+		FROM demo_student   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by student_id  desc
+		</if>
+	</select>
+</mapper>

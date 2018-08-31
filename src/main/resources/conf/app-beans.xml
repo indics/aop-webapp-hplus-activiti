@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
+       
+       <!-- spring上下文,可以获取 上下文的Context -->
+       <bean id="appUtil" class="com.cosim.core.util.AppUtil" />
+       
+       <!-- spring上下文,可以获取 上下文的Context,appleframe的标签需要用到 -->
+       <bean id="springContextHolder" class="com.appleframe.common.SpringContextHolder" />
+       
+       <!-- 资源文件操作类 -->
+       <bean id="resourceUtil" class="com.cosim.core.util.ResourceUtil" />
+       <bean id="iCache" class="com.cosim.core.cache.impl.MemoryCache" ></bean>
+       
+       <!-- 定时器服务类 -->
+		<bean id="schedulerService" class="com.cosim.core.scheduler.SchedulerService"></bean>
+       	<!-- 用户组织角色操作接口的实现类 -->
+		<bean id="iAuthenticate" class="com.cosim.platform.auth.AuthenticateImpl"></bean>
+		
+		<!-- 表创建器 -->
+		<bean id="tableOperator" class="com.cosim.core.customertable.TableOperatorFactoryBean">
+			<property name="dbType" value="${jdbc.dbType}"/>
+			<property name="jdbcTemplate" ref="jdbcTemplate"/>
+			<property name="dialect" ref="dialect"></property>
+		</bean>
+		<!-- 
+		表元数据操作类 
+		BpmIndexRebuildController 中使用到。
+		-->
+		<bean id="tableMeta" class="com.cosim.core.customertable.TableMetaFactoryBean">
+			<property name="sysDataSource">
+				<bean id="sysdatasource" class="com.cosim.platform.model.system.SysDataSource">
+					<property name="alias" value="system-datasource"></property>
+					<property name="driverName" value="${jdbc.driverClassName}"></property>
+					<property name="url" value="${jdbc.url}"></property>
+					<property name="userName" value="${jdbc.username}"></property>
+					<property name="password" value="${jdbc.password}"></property>
+					<property name="dbType" value="${jdbc.dbType}"></property>
+				</bean>
+			</property>
+		</bean>
+		<!-- 方言 -->
+		<bean id="dialect" class="com.cosim.core.customertable.DialectFactoryBean">
+			<property name="dbType" value="${jdbc.dbType}"/>
+		</bean>
+		<!-- jdbcDao 实现了分页查询。 -->
+		<bean id="jdbcDao" class="com.cosim.core.db.JdbcDao">
+			<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+			<property name="dialect" ref="dialect"></property>
+		</bean>
+		
+		<!-- 短信发送
+		com.cosim.core.sms.impl.NoneMessageImpl 可以编写发送短信任何实现方式的demo
+		com.cosim.core.sms.impl.ShortMessageImpl 网关
+		com.cosim.core.sms.impl.ModemMessage 短信猫
+		 -->
+		<bean id="iShortMessage" class="com.cosim.core.sms.impl.NoneMessageImpl">
+		</bean>
+</beans>

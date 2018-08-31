@@ -1,0 +1,160 @@
+package com.casic.util;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import net.sf.json.JSONObject;
+
+public class HttpClientUtil {
+	private static final Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
+
+	/**
+	 * 连接超时时间
+	 */
+	public static final int CONNECTION_TIMEOUT_MS = 360000;
+
+	/**
+	 * 读取数据超时时间
+	 */
+	public static final int SO_TIMEOUT_MS = 360000;
+
+	public static final String CONTENT_TYPE_JSON_CHARSET = "application/json;charset=utf-8";
+
+	public static final String CONTENT_TYPE_XML_CHARSET = "application/xml;charset=utf-8";
+
+	public static final String CONTENT_TYPE_JSON_CHARSET_UTF8 = "application/json;charset=utf-8";
+
+	public static final String CONTENT_TYPE_XML_CHARSET_UTF8 = "application/xml;charset=utf-8";
+
+	/**
+	 * httpclient读取内容时使用的字符集
+	 */
+	public static final String CHARSET_GBK = "GBK";
+
+	public static final String CHARSET_UTF8 = "UTF-8";
+
+	public static final Charset UTF_8 = Charset.forName(CHARSET_UTF8);
+
+	public static final Charset GBK = Charset.forName(CHARSET_GBK);
+
+	public static String JsonPostInvoke(String url, Map<String, Object> params){
+		System.out.println("post方式提交json数据开始......");
+        // 接收参数json列表  
+        JSONObject jsonParam = new JSONObject();  
+        // http客户端
+        HttpClient httpClient = buildHttpClient(false);
+        // post请求
+        
+        HttpPost method = new HttpPost(url);  
+        if(null != params){
+        	for(String key : params.keySet()){
+        		if(params.get(key)==null||"".equals(params.get(key))||"execPath".equals(key)){
+        			continue;
+        		}
+        		jsonParam.put(key, params.get(key));
+        	}
+        	// 参数实体
+        	StringEntity entity = new StringEntity(jsonParam.toString(), CHARSET_UTF8);//解决中文乱码问题    
+        	entity.setContentEncoding(CHARSET_UTF8);    
+            entity.setContentType(CONTENT_TYPE_JSON_CHARSET_UTF8);    
+            method.setEntity(entity);  
+        }
+        // 执行响应操作
+        HttpResponse result = null;
+        String data="";
+		try {
+			result = httpClient.execute(method);
+			data= EntityUtils.toString(result.getEntity()); 
+		} catch (Exception e) {
+			data="请求错误";
+			logger.error(e.getMessage());
+		
+		}  
+        // 请求结束，返回结果  
+       
+        return data;
+	}
+
+	public static String JsonPostInvoke(String url, Map<String, Object> params, String charsets) throws Exception {
+		// 接收参数json列表
+		JSONObject jsonParam = new JSONObject();
+		// http客户端
+		HttpClient httpClient = buildHttpClient(false);
+		// post请求
+		HttpPost method = new HttpPost(url);
+		if (null != params) {
+			for (String key : params.keySet()) {
+				jsonParam.put(key, params.get(key));
+			}
+			// 参数实体
+			StringEntity entity = new StringEntity(jsonParam.toString(), CHARSET_UTF8);// 解决中文乱码问题
+			entity.setContentEncoding(CHARSET_UTF8);
+			entity.setContentType(CONTENT_TYPE_JSON_CHARSET_UTF8);
+			method.setEntity(entity);
+		}
+		// 执行响应操作
+		HttpResponse result = httpClient.execute(method);
+		// 请求结束，返回结果
+		String data = EntityUtils.toString(result.getEntity());
+		return data;
+	}
+
+	public static Map<String, Object> JsonGetInvoke(String url, String charsets)
+			throws ClientProtocolException, IOException {
+		System.out.println("get方式提交json数据开始......");
+		// 接收参数json列表
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		// http客户端
+		HttpClient httpClient = buildHttpClient(false);
+		// post请求
+		HttpGet method = new HttpGet(url);
+
+		// 执行响应操作
+		HttpResponse result = httpClient.execute(method);
+		// 请求结束，返回结果
+		String data = EntityUtils.toString(result.getEntity());
+		resultMap.put("body", data);
+		int status = result.getStatusLine().getStatusCode();
+		resultMap.put("status", status);
+		Header[] headers = result.getAllHeaders();
+		resultMap.put("header", headers);
+		resultMap.put("resultLink", url);
+		return resultMap;
+	}
+
+	/**
+	 * 创建HttpClient
+	 * 
+	 * @param isMultiThread
+	 * @return
+	 */
+	public static HttpClient buildHttpClient(boolean isMultiThread) {
+
+		CloseableHttpClient client;
+		if (isMultiThread) {
+			client = HttpClientBuilder.create().setConnectionManager(new PoolingHttpClientConnectionManager()).build();
+		} else {
+			client = HttpClientBuilder.create().build();
+			// 设置代理服务器地址和端口
+		}
+		return client;
+	}
+
+}

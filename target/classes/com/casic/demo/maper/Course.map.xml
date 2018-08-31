@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.casic.demo.model.course.Course">
+	<resultMap id="Course" type="com.casic.demo.model.course.Course">
+		<id property="id" column="id" jdbcType="NUMERIC"/>
+		<result property="year" column="year" jdbcType="NUMERIC"/>
+		<result property="term" column="term" jdbcType="NUMERIC"/>
+		<result property="createUser" column="create_user" jdbcType="NUMERIC"/>
+		<result property="createTime" column="create_time" jdbcType="DATE"/>
+		<result property="taskId" column="task_id" jdbcType="NUMERIC"/>
+		<result property="runId" column="run_id" jdbcType="NUMERIC"/>
+		<result property="runState" column="run_state" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<sql id="columns">
+		id,year,term,create_user,create_time,task_id,run_id,run_state
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(id)"> AND id = #{id} </if>
+			<if test="@Ognl@isNotEmpty(year)"> AND year like #{year} </if>
+			<if test="@Ognl@isNotEmpty(term)"> AND term like #{term} </if>
+			<if test="@Ognl@isNotEmpty(createUser)"> AND create_user like #{createUser} </if>
+			<if test="@Ognl@isNotEmpty(createTime)"> AND create_time  = #{createTime} </if>
+			<if test="@Ognl@isNotEmpty(begincreateTime)"> AND create_time >= #{begincreateTime,jdbcType=DATE} </if>
+			<if test="@Ognl@isNotEmpty(endcreateTime)"> AND create_time <![CDATA[ <= #{endcreateTime,jdbcType=DATE}]]> </if>
+			<if test="@Ognl@isNotEmpty(taskId)"> AND task_id  = #{taskId} </if>
+			<if test="@Ognl@isNotEmpty(runId)"> AND run_id  = #{runId} </if>
+			<if test="@Ognl@isNotEmpty(runState)"> AND run_state LIKE #{runState}  </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.casic.demo.model.course.Course">
+		INSERT INTO cloud_course
+		(id,year,term,create_user,create_time,task_id,run_id,run_state)
+		VALUES
+		(#{id,jdbcType=NUMERIC}, #{year,jdbcType=NUMERIC}, #{term,jdbcType=NUMERIC}, #{createUser,jdbcType=NUMERIC}, #{createTime,jdbcType=DATE}, #{taskId,jdbcType=NUMERIC}, #{runId,jdbcType=NUMERIC}, #{runState,jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM cloud_course 
+		WHERE
+		id=#{id}
+	</delete>
+	
+	<update id="update" parameterType="com.casic.demo.model.course.Course">
+		UPDATE cloud_course SET
+		year=#{year,jdbcType=NUMERIC},
+		term=#{term,jdbcType=NUMERIC},
+		create_user=#{createUser,jdbcType=NUMERIC},
+		create_time=#{createTime,jdbcType=DATE},
+		task_id=#{taskId,jdbcType=NUMERIC},
+		run_id=#{runId,jdbcType=NUMERIC},
+		run_state=#{runState,jdbcType=VARCHAR}
+		WHERE
+		id=#{id}
+	</update>
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="Course">
+		SELECT <include refid="columns"/>
+		FROM cloud_course
+		WHERE
+		id=#{id}
+	</select>
+	
+	<select id="getAll" resultMap="Course">
+		SELECT <include refid="columns"/>
+		FROM cloud_course   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by id  desc
+		</if>
+	</select>
+</mapper>

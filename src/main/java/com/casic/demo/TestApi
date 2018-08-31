@@ -1,0 +1,45 @@
+package com.casic.demo.api;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.http.client.ClientProtocolException;
+
+import com.casic.util.HttpClientUtil;
+
+public class TestApi {
+
+	public static void main(String[] args) {
+
+		String url = "http://iapigateway.casicloud.com/api/v1/getAllOrgs";
+		//url = "http://106.74.152.118:2381/api/getAllOrgs.ht";
+		// String url =
+		// "http://localhost:5557/api/v1/getProvinceAndDevs?appsecret=e9d0bd9c-ea8b-4768-9f6d-8af51fc7bb4f&apisecret=DF792942B4DAB95475FA590D70B1805E";
+		// String url = "http://localhost:5557/api-b-url/getProvinceAndDevs";
+		// url="http://dstest.paas.cosimcloud.com:80/api/getAllOrgs.ht?api_dEbug=12";
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		// params.put("devId", "e220081403340000000000064");
+		// 非系统管理员应该按企业用户处理，需要传入企业ID
+		// if(!hasAdmin()) params.put("orgId",
+		// ContextUtil.getCurrentTenantId());
+		 params.put("currentPage", "1");
+		 params.put("pagesize","10");
+		// params.put("api_dEbug","10");
+		// params.put("offset", "1");
+		// params.put("maxrows","10");
+		// params.put("orgId","8090309");
+		// params.put("haha","8090309");
+		params.put("api_dEbug","12");
+//		params.put("devId","123");
+//		params.put("apisecret", "752ECEE582A8F7AA97ACB937DB544D7E");
+//		params.put("appsecret", "15CCD1D4503816CDBE5B2219AC6B2F5F");
+		String result = "";
+		System.out.println(System.currentTimeMillis());
+		
+		result = HttpClientUtil.JsonPostInvoke(url, params);
+		System.out.println(System.currentTimeMillis());
+		System.out.println(result);
+	}
+}

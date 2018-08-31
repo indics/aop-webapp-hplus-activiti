@@ -1,0 +1,76 @@
+.Loginbox{position:relative;z-index: 999;}
+.Loginbox .lcon{float:left;}
+.Loginbox .rcon{position:absolute;right:2px;bottom:-11px;height:500px; z-index: 999;}
+.Loginbox .reg{position:absolute;left:0;bottom:-11px;height:52px; z-index: 999;}
+.Loginbox h2{font-size:18px;color:#215db4;margin:20px 0;margin-left:60px;font-weight: normal;}
+.logintab{margin-left:60px;}
+.logintab li{display:block;float:left;padding:6px 30px;position:relative;top:1px;font-size:16px;color:#929aa6;background:#fbfafd;border:1px solid #d5d5d5;margin-right:10px;}
+.logintab li.active{ background:#f4f2f9;border:1px solid #d5d5d5;border-top:2px solid #1f8ed5;border-bottom:none;color:#006ac0;font-weight: bold;}
+.logintab{margin-left:60px;}
+.logintab b{display:block;float:left;padding:6px 30px;position:relative;top:1px;font-size:16px;color:#929aa6;background:#fbfafd;border:1px solid #d5d5d5;margin-right:10px;}
+.logintab b.active{ background:#f4f2f9;border:1px solid #d5d5d5;border-top:2px solid #1f8ed5;border-bottom:none;color:#006ac0;font-weight: bold;}
+.logincon{ background:#f4f2f9;width:595px;height:353px;border-top:1px solid #d5d5d5;padding-top:30px;}
+.logincon p{margin-top:20px;}
+.textc{border-radius:5px;width:228px;height:48px;line-height:48px;padding-left:40px; background:#fff url(../images/login/user.png) no-repeat 5px center;border:1px solid #9bb1c3;font-family:"Microsoft YaHei";color:#a1a1a1;}
+.textc2{border-radius:5px;width:228px;height:48px;line-height:48px;padding-left:40px; background:#fff url(../images/login/pass.png) no-repeat 5px center;border:1px solid #9bb1c3;font-family:"Microsoft YaHei";color:#a1a1a1;}
+.textd{border-radius:5px;width:110px;height:48px;line-height:48px;border:1px solid #9bb1c3; text-align:center;border:1px solid #9bb1c3;font-family:"Microsoft YaHei";color:#a1a1a1;}
+.btnsum{ cursor:pointer;background: url(../images/login/loginbtn.png) no-repeat;width:145px;height:50px;border:none;margin-left:20px;}
+.logincon dd{float:left; display: none;padding-left:60px;font-size:16px;font-family:"Microsoft YaHei";}
+
+
+.bgbti3{
+	background: url(../images/login/bgbt3.jpg) no-repeat left top;
+	height: 12px;
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	left: -1px;
+	z-index: 0;
+}
+.zhanweii3{height:12px;}
+
+.Regbox{position:relative;z-index: 999;}
+.Regbox h2{font-size:18px;color:#ff8c00;margin:20px 0;margin-left:60px;font-weight: normal;position:relative;}
+.regcon{ background:#f4f2f9;width:1002px;border-top:1px solid #d5d5d5;padding-top:30px;}
+.regcon p{margin-top:20px;}
+.regcon dd{float:left; display: none;padding-left:60px;font-size:16px;font-family:"Microsoft YaHei";}
+.regtop li{float:left;border-right:1px solid #d5d5d5;padding:0 58px;font-size:14px;}
+.regtop{width:1002px;overflow: hidden;}
+.regtop ul{width:1050px;}
+.regtop li em{font-weight: bold;}
+
+
+.regform ul{margin-bottom:10px;}
+.regform li{margin-top:5px;}
+.regform li input,.regform li textarea{ background: #fff;}
+.regform li .submitbtn1{padding-top:30px;}
+.regform a.backlist{height:44px;position:relative;top:-7px;*top:15px;display:inline-block;margin-left:10px;font-size:14px;}
+.regform li .select{height:52px;width:317px; background: url(../images/main/selecti.png) no-repeat;float:left;margin:10px 0;margin-right:38px;}
+.regform label {margin-right:10px;}
+.regform label input{margin-left:10px;}
+.select span{cursor:pointer;width:317px;height:52px;line-height:52px;display:inline-block;background: url(../images/main/xinghao.jpg) no-repeat 10px center;padding-left:30px;color:#a1a1a1;font-size:16px;font-family: "Microsoft YaHei";;}
+.select {position:relative;}
+.selectcon{display:none;position:absolute;left:0;top:52px; background: #fff;border:1px solid #9bb1c3;border-top:none;width:303px;}
+.selectcon li{margin:0;padding:0;}
+.selectcon li a{display: block;padding:10px;color:#333;}
+.selectcon li a:hover{ background: #d9e0f0;color:#fff;}
+.regbtn{ background: url(../images/login/regbtn.png) no-repeat;width:268px;height:50px; display: block; text-indent: -9999px;border:none;margin:10px 0;}
+
+.tongyi{margin:20px 0; display: block;font-size:14px;}
+.tongyi em{ background: url(../images/login/chex.png) no-repeat;width:21px;height:21px;position:relative; display: inline-block;top:4px;margin-right:4px;}
+.tongyi em i{position:absolute;left:4px;top:6px; background: url(../images/login/yes.png) no-repeat;width:13px;height:10px; display:none;}
+
+.regform1 ul{margin-bottom:10px;}
+.regform1 li{margin-top:20px;}
+.regform1 li input,.regform li textarea{ background: #fff;}
+.regform1 li .submitbtn1{padding-top:30px;}
+.regform1 a.backlist{height:44px;position:relative;top:-7px;*top:15px;display:inline-block;margin-left:10px;font-size:14px;}
+.regform1 li .select{height:52px;width:317px; background: url(../images/main/selecti.png) no-repeat;float:left;margin:10px 0;margin-right:38px;}
+.regform1 li .text3{width:220px;}
+.regform1 label {margin-right:10px;}
+.regform1 label input{margin-left:10px;}
+.regform1 li .textd{width:163px; text-align: left;padding-left:30px;}
+
+.gologin{position:absolute;right:10px;top:60px;font-size:14px;color:#625548;font-weight: bold;}
+.gologin:hover{color:#625548;}
+.gologin em{color:#ff2e13;margin-left:3px; display: inline-block;}
